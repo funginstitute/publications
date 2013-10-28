@@ -1,0 +1,55 @@
+The process of converting the public patent data into a usable form begins with parsing, the manipulation of a document's grammar and anatomy to extract structured and labeled data. The Fung Institute parser consumes takes as input the weekly USPTO patent distributions and outputs the relevant data into a SQL database. To simplify the problem of parsing the diversity of formats of digital patent data, the current parser addresses only the XML-based documents. At time of writing, the Fung Institute parser is capable of handling patent grants of formats XML v4.0, v4.1, v4.2, v4.3 and v4.4 (spanning 2005 through 2013) and patent applications of formats XML v1.5, v1.6, v4.0, v4.2 and v4.3 (spanning 2001 through 2013). Grant data prior to 2005 is drawn from a truncated version of the Harvard DVN database.
+
+The code is written in Python 2~\cite{python} and is available on Github~\cite{newparser}.
+
+\begin{figure*}[t]
+\center
+\begin{verbatim}
+<applicants>
+    <applicant sequence="001" app-type="applicant-inventor">
+        <addressbook>
+            <last-name>Roach</last-name>
+            <first-name>Richard</first-name>
+            <address>
+                <city>Schaumburg</city>
+                <state>IL</state>
+                <country>US</country>
+            </address>
+        </addressbook>
+    </applicant>
+    <applicant sequence="002" app-type="applicant-inventor">
+        ...
+    </applicant>
+</applicants>
+\end{verbatim}
+\caption{Sample inventor element from XML v4.2 schema}
+\label{fig:inventorelement}
+\end{figure*}
+
+\subsection{XML Overview}
+
+XML, or Extensible Markup Language, defines a set of rules for encoding documents that seek to facilitate comprehension by both machines and humans. Since the publishing XML 1.0 standard in 1996, the format gained traction due to the minimal size and flexible structure. In its simplest form, an XML document is a collection of elements, which are each composed of tags and content. Tags, such as \verb`<citation>`, lend semantic structure to a document and allow a reader to determine the significance of the content that follows. An element is a logical component that begins and ends with tags (e.g. \verb`<citation>` and \verb`</citation>`)
+and contains either regular text or additional, nested elements. An example of an element can be found in Figure~\ref{fig:inventorelement}.
+
+\subsection{Parser Method}
+
+The Fung Institute parser adopts a novel approach to the problem of extracting data from XML documents. As XML documents are fed to the parser, they are transformed from XML's canonical tree-based organization into modified Python dictionaries. Typical XML parsers must make certain assumptions about the nesting and placement of tags and must contain careful allowances for missing, mislabeled, or unexpected tags. The Fung Institute parser circumvents this issue by not requiring a detailed specification of the data to be extracted, instead relying on general descriptors of the location of needed data. This makes the parser more robust and able to handle small schema changes without adjustment, therefore reducing the number of potential runtime errors. The existence of such an engine also expedites the development of additional parsers that handle subsequent changes to the USPTO patent XML schemas.
+
+The XML parsing engine reduces the amount of explicit error checking code while making the source code concise and easy to understand. The engine is easily configurable, and can be directed to automatically download and parse patents in a given date range, apply arbitrary post parsing steps, and deliver the results to a database.
+
+\subsection{Data Idiosyncracies}
+
+While the USPTO patent data is public and freely available, it is not without its problems.
+
+There is inconsistent usage of HTML idioms and escaping. Underscores, ampersands, emdashes and brackets -- to name a few -- are not expressed as literal characters in the raw XML, and care must be taken to translate sequences such as \verb`&#x26;` and \verb`<sub>&#x2014;</sub>` so that the extracted data is human-readable.
+
+Accents within names are irregularly represented and follow differing standards. Accented letters are either missing (e.g., ``R\'emy" becomes ``R my") or
+replaced by description (e.g. ``R\'emy" becomes "R acute over e my") or replaced
+by the same letter without accent (e.g., ``R\'emy" becomes ``Remy"). All three
+versions of the name ``R\'emy'' are found across the DVN databases and USPTO weekly publications.
+
+Last name prefixes such as ``van der'' and titles such as ``Esquire'' are varyingly included in either the \verb`<first-name>` or \verb`<last-name>` tags, which complicates the parsing of names into a consistent form.
+
+The document numbers of patents are inconsistently prefixed with letters representing the type of document, and are occasionally padded with a leading ``0''. These eccentricities exacerbate the logical complexity of the parser, but must be handled in order to maintain consistent notation that enables the reliable tracking of references to documents.
+
+These issues are handled by the Fung Institute parser, and are discussed at length in a previous Fung Institute publication~\cite{formattingpatentdata}.

@@ -1,0 +1,89 @@
+One of the primary problems with conducting meaningful research with USPTO
+patent data is the high variability in quality. Cities are misspelled or
+mislisted. Organizations are alternatively abbreviated and listed in full with
+little modicum of consistency. Inventors, lawyers and assignees will misspell
+their names, change their names and unpredictably list their middle initials or
+names. The Berkeley patent database provides facilities to account for these
+errors, and codifies the disambiguation of such records in order to make
+possible their accurate retrieval.
+
+\subsection{Geocoding}
+
+There are over 12 million locations listed in the USPTO patent weekly downloads
+from 1975 to 2013, with 350,000 unique tuples of \verb`(city, state, country)`.
+These tuples follow the typical motif of data problems in the rest of the
+patent data: incorrect or nonstandard country codes, inconsistent romanization
+of foreign locations and various misspellings. We resolved the ambiguities in
+the location data using a propietary disambiguation technique developed by
+Google. When new patent data is processed, we run a series of data cleaning
+processes to correct for some of the common errors, then cross reference with the
+lookup table~\cite{geotable} obtained through the Google disambiguation.
+
+A detailed analysis of the problems with USPTO location data and our handling
+of locations can be found through a related Fung Institute
+publication~\cite{geocoding}. 
+
+Locations are associated with assignees, inventors and lawyers. Typically, a
+patent record's ``location'' is the location of the first inventor listed on
+the patent.
+
+\subsection{Assignees}
+
+For a given patent, the assignees are the entities (either organizations or
+individuals) that have property rights to the patent. The assignee records are
+imperative for firm-level analysis of patent data, and are used for tracking
+ownership of patents. The weekly releases of patent documents only contain the
+original assignee of a patent when it was initially granted.
+
+However, it is difficult to obtain accurate results for simple (and necessary)
+questions such as \emph{``which patents are owned by firm X?''} because of the
+pandemic inconsistency of spellings. A cursory search for assignee records that
+resemble General Electric yield the following:
+
+\begin{itemize}
+    \item General Electric Company
+    \item General Electric
+    \item General Electric Co..
+    \item General Electric Capital Corporation
+    \item General Electric Captical Corporation
+    \item General Electric Canada
+    \item General Electrical Company
+    \item General Electro Mechanical Corp
+    \item General Electronic Company
+    \item General Eletric Company
+\end{itemize}
+
+This is not even a complete list of all the (mis)representations of General
+Electric, but already we can see the potential issues with trying to get
+accurate results.
+
+We do not yet provide fully featured entity resolution for assignee records,
+but we do maintain a preliminary disambiguation of the records that corrects
+for minor misspellings. We do this by applying the Jaro-Winkler~\cite{jw}
+string similarity algorithm to each pair of raw assignee records. Two records
+that are within a certain bound of similarity are considered the same, and are
+linked together.
+
+It is not tractable to perform pairwise computation on each of the 5,850,531
+raw assignee records in the database (at time of writing), so we group the
+assignees by their first letter, and then perform the pairwise comparisions
+within each of these blocks. This allows us to hold a smaller chunk of the
+assignees in memory at each step, and achieves near the same accuracy.
+
+\subsection{Lawyers}
+
+The raw lawyer records follow much of the same deficiencies in quality as the
+assignee records. Again, we only offer a preliminary disambiguation of lawyer
+records using the same algorithm as described above, but future development
+will yield more accurate results.
+
+\subsection{Inventors}
+
+We provide a polished disambiguation mechanism for inventor records. Using the
+published name of an inventor, the patent technology class, co-inventor names,
+published location and original assignee, we are able to infer with more than
+95\% accuracy which inventor records are the same across all records in the
+patent database.
+
+A detailed summary of our technique can be found through a related Fung
+Institute publication~\cite{newdisambiguation}.

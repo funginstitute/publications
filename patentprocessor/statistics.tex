@@ -1,0 +1,16 @@
+Many research applications of patent data require records from multiple tables
+to be linked together: for instance, finding all citations made to a patent, or
+finding all patents for an inventor. Due to the size of the database, however,
+gathering all the requisite data and linking it together takes a nontrivial
+amount of time. To facilitate some common research vectors, we provide three
+tables of precompiled statistics.
+
+The \verb`FutureCitationRank` table contains the rank of each patent by the number of future citations
+in each year. This answers the question ``in year X, patent number Y got Z
+citations. It was the Nth most cited patent that year''.
+
+The \verb`InventorRank` table contains the rank of each inventor by how many
+patents they have been granted in a given year.
+
+The \verb`CitedBy` table contains the direct mapping of a focal patent to all
+patents that cite that patent.

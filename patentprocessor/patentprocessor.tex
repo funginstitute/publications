@@ -1,0 +1,46 @@
+\documentclass[11pt, twocolumn]{article}
+\usepackage{fullpage}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{pdftexcmds}
+\usepackage{listings}
+\begin{document}
+
+\title{Processing USPTO Patent Data}
+\author{Gabe Fierro\\
+	Coleman Fung Institute for Engineering Leadership\\
+	UC Berkeley\\
+	\texttt{fierro@eecs.berkeley.edu}}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+We describe a completely automated data process designed to consume weekly releases of patent grants and applications distributed by the United States Patent and Trademark Office (USPTO). The process downloads and unpacks the zipped distribution files, parses the raw data into a SQL database, and performs various disambiguations and statistical calculations on the database.
+\end{abstract}
+
+\section{Introduction}
+\input{introduction}
+\section{Processing Workflow}
+\input{workflow}
+\section{Data Sources}
+\input{datasources}
+\section{Parsing}
+\input{parsing}
+\section{Database}
+\input{database}
+\section{Disambiguations}
+\input{disambiguations}
+\section{Statistics}
+\input{statistics}
+
+{
+\scriptsize
+\bibliographystyle{acm}
+\bibliography{patentprocessor}
+}
+
+%\clearpage
+\section*{Appendix}
+\input{dvnschemas}
+
+\end{document}

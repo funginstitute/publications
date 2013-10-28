@@ -1,0 +1,160 @@
+\subsection*{Harvard DVN Database Schemas}
+\begin{table*}
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`Patent` & Patent owned by assignee \\
+\verb`AsgType` & Unknown \\
+\verb`Assignee` & Name of assignee \\
+\verb`City` & City location of assignee \\
+\verb`State` & State location of assignee \\
+\verb`Country` & Country of assignee \\
+\verb`Nationality` & Nationality of assignee \\
+\verb`Residence` & Street address of assignee \\
+\verb`AsgSeq` & Order of assignee as appears in patent \\
+\hline
+\end{tabular}
+\caption{DVN table schema for assignees}
+\end{table*}
+
+\begin{table*}
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`Patent` & Patent making the citation \\
+\verb`Cit_Date` & Date of cited document \\
+\verb`Cit_Name` & Unknown \\
+\verb`Cit_Kind` & Type of cited document \\
+\verb`Cit_Country` & Origin of cited document \\
+\verb`Citation` & Number or ID of cited document \\
+\verb`Category` & Unknown \\
+\verb`CitSeq` & Order of citation as appears in patent \\
+\hline
+\end{tabular}
+\caption{DVN table schema for citations}
+\end{table*}
+
+\begin{table*}
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`Patent` & focal Patent \\
+\verb`Prim` & Order of classification \\
+\verb`Class` & USPTO technology class \\
+\verb`SubClass` & USPTO technology subclass \\
+\hline
+\end{tabular}
+\caption{DVN table schema for classes}
+\end{table*}
+
+\begin{table*}
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`Patent` & Patent owned by inventor \\
+\verb`Firstname` & Inventor's first name \\
+\verb`Lastname` & Inventor's last name \\
+\verb`Street` & Inventor street address \\
+\verb`City` & Inventor city \\
+\verb`State` & Inventor state \\
+\verb`Country` & Inventor country \\
+\verb`Zipcode` & Inventor zipcode \\
+\verb`Nationality` & Inventor nationality \\
+\verb`InvSeq` & Order of inventor as listed on patent \\
+\hline
+\end{tabular}
+\caption{DVN table schema for inventors}
+\end{table*}
+
+\begin{table*}
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`Patent` & Patent number \\
+\verb`Kind` & Unknown \\
+\verb`Claims` & Number of claims made by patent \\
+\verb`AppType` & Unknown \\
+\verb`AppNum` & Application reference number \\
+\verb`GDate` & Date of grant \\
+\verb`GYear` & Year of grant \\
+\verb`AppDate` & Date of application \\
+\verb`AppYear` & Year of application \\
+\verb`PatType` & Type of patent (Reissue, Utility, etc) \\
+\hline
+\end{tabular}
+\caption{DVN table schema for patents}
+\end{table*}
+
+\begin{table*}
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`Patent` & focal Patent \\
+\verb`Abstract` & Patent abstract \\
+\verb`Title` & Patent title \\
+\hline
+\end{tabular}
+\caption{DVN table schema for patent descriptions}
+\end{table*}
+
+\begin{table*}
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`Patent` & focal Patent \\
+\verb`Firstname` & Lawyer's first name \\
+\verb`Lastname` & Lawyer's last name \\
+\verb`LawCountry` & Location of lawyer \\
+\verb`OrgName` & Name of law firm or organization \\
+\verb`LawSeq` & Order of lawyer as listed in patent \\
+\hline
+\end{tabular}
+\caption{DVN table schema for lawyers}
+\end{table*}
+
+\begin{table*}
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`Patent` & focal Patent \\
+\verb`Descrip` & Description of scientific reference \\
+\verb`CitSeq` & Order of citation as appears in patent \\
+\hline
+\end{tabular}
+\caption{DVN table schema for scientific references}
+\end{table*}
+
+\begin{table*}
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`Patent` & focal Patent \\
+\verb`DocType` & Type of related document \\
+\verb`OrderSeq` & Order of document as appears in patent \\
+\verb`Country` & Country of origin for related document \\
+\verb`RelPatent` & Patent number of related document \\
+\verb`Kind` & Unknown \\
+\verb`RelDate` & Date of related document \\
+\verb`Status` & Status of related document \\
+\hline
+\end{tabular}
+\caption{DVN table schema for US related documents}
+\end{table*}
