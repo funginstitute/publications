@@ -15,6 +15,10 @@ pdf: $(PDF)
 	bibtex $*
 	pdflatex $(FLAGS) $*
 	pdflatex $(FLAGS) $*
+	pdflatex $(Flags) appendix.tex
+	pdfjoin patentprocessor.pdf appendix.pdf
+	rm appendix.pdf
+	mv appendix-joined.pdf patentprocessor.pdf
 
 clean:
 	rm -rf *~ *.log patentprocessor.pdf *.aux *.out *.toc *.bbl
