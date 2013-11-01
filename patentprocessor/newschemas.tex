@@ -1,0 +1,372 @@
+\subsection*{Fung Institute Patent Database Schemas}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`id` & Unique identifier for application record \\
+\verb`patent_id` & Corresponding granted patent record \\
+\verb`type` & Type of patent application \\
+\verb`number` & Patent application document identifier \\
+\verb`country` & Country in which application was filed \\
+\verb`date` & Date of application submission \\
+\hline
+\end{tabular}
+\caption{Application -- information on the application for a granted patent}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`id` & Unique identifier for disambiguated Assignee record \\
+\verb`type` & USPTO code for type of assignee \\
+\verb`name_first` & First name of assignee (if individual) \\
+\verb`name_last` & Last name of assignee (if individual) \\
+\verb`organization` & Name of assignee's organization (if firm) \\
+\hline
+\end{tabular}
+\caption{Assignee -- disambiguated records for the original patent assignee}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`uuid` & Unique identifier for raw assignee record \\
+\verb`patent_id` & Patent which contains this record \\
+\verb`assignee_id` & Identifier of disambiguated assignee record \\
+\verb`rawlocation_id` & Location of raw assignee \\
+\verb`type` & USPTO code for type of assignee \\
+\verb`name_first` & First name of assignee (if individual) \\
+\verb`name_last` & Last name of assignee (if individual) \\
+\verb`organization` & Name of assignee's organization (if firm) \\
+\verb`sequence` & Order in which this assignee was listed on the patent \\
+\hline
+\end{tabular}
+\caption{RawAssignee -- raw records for the original patent assignee}
+\end{table}
+
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\verb`patent_id` & Patent being cited \\
+\verb`citation_id` & Document citing the focal patent \\
+\verb`year` & Year the citation was made \\
+\hline
+\hline
+\end{tabular}
+\caption{CitedBy -- precompiled table of future citations}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`uuid` & Unique identifier for claim record \\
+\verb`patent_id` & Corresponding patent document for this claim \\
+\verb`text` & Text of claim \\
+\verb`dependent` & Sequence number of claim this record is dependent on \\
+\verb`sequence` & Order in which this claim appears in its patent \\
+\hline
+\end{tabular}
+\caption{Claim -- full text of patent claims}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`uuid` & Unique identifier for citation relation \\
+\verb`patent_id` & Patent making a citation \\
+\verb`date` & Date of patent making the citation \\
+\verb`name` & Name of foreign citation \\
+\verb`kind` & Kind of document being cited \\
+\verb`number` & Document identifier of cited document \\
+\verb`country` & Country of origin of cited document \\
+\verb`category` & Type of citation to cited document \\
+\verb`sequence` & Order in which the focal patent cited the document \\
+\hline
+\end{tabular}
+\caption{ForeignCitation -- citations made to foreign patents}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`patent_id` & Patent being ranked \\
+\verb`num_citations` & Number of citations the patent received in the given year \\
+\verb`year` & Focal year \\
+\verb`rank` & Rank 1 means the patent was the most cited document in the given year \\
+\hline
+\end{tabular}
+\caption{FutureCitationRank -- rank of each patent by the number of future citations in each year}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`id` & Unique inventor identifier for disambiguated record \\
+\verb`name_first` & First name of inventor \\
+\verb`name_last` & Last name of inventor \\
+\verb`nationality` & Nationality of inventor \\
+\hline
+\end{tabular}
+\caption{Inventor -- disambiguated inventor records}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`id` & Unique raw inventor identifier \\
+\verb`patent_id` & Patent which contains this record \\
+\verb`rawlocation_id` & Location of raw inventor \\
+\verb`name_first` & First name of inventor \\
+\verb`name_last` & Last name of inventor \\
+\verb`nationality` & Nationality of inventor \\
+\verb`sequence` & Order in which this inventor was listed on the patent \\
+\hline
+\end{tabular}
+\caption{RawInventor -- raw inventor records}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`inventor_id` & Inventor being ranked \\
+\verb`num_patents` & Num of patents attributed to inventor in the given year \\
+\verb`year` & Focal year \\
+\verb`rank` & Rank 1 means the inventor was granted the most patents in the given year \\
+\hline
+\end{tabular}
+\caption{InventorRank -- rank of each inventor by how many patents they were granted in each year}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`id` & Unique lawyer identifier \\
+\verb`name_first` & First name of lawyer (if individual) \\
+\verb`name_last` & Last name of lawyer (if individual) \\
+\verb`organization` & Name of firm (if not individual) \\
+\verb`country` & Country on record of lawyer \\
+\hline
+\end{tabular}
+\caption{Lawyer -- disambiguated lawyer records}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`id` & Unique lawyer identifier of raw record \\
+\verb`name_first` & First name of lawyer (if individual) \\
+\verb`name_last` & Last name of lawyer (if individual) \\
+\verb`organization` & Name of firm (if not individual) \\
+\verb`country` & Country on record of lawyer \\
+\verb`sequence` & Order in which this lawyer was listed on the patent \\
+\hline
+\end{tabular}
+\caption{RawLawyer -- lawyers that worked on the given patent}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`id` & Unique location identifier \\
+\verb`city` & Disambiguated city name \\
+\verb`state` & Disambiguated state name \\
+\verb`country` & Disambiguated country \\
+\verb`latitude` & Latitude of disambiguated location \\
+\verb`longitude` & Longitude of disambiguated location \\
+\hline
+\end{tabular}
+\caption{Location -- disambiguated location data for assignees and inventors}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`id` & Unique location identifier \\
+\verb`city` & Raw city name \\
+\verb`state` & Raw state name \\
+\verb`country` & Raw country \\
+\hline
+\end{tabular}
+\caption{RawLocation -- raw location data for assignees and inventors}
+\end{table}
+
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`id` & USPTO code for main class \\
+\verb`title` & Title of USPTO main class \\
+\verb`text` & Description of USPTO main class \\
+\hline
+\end{tabular}
+\caption{MainClass -- reference table for definitions of USPTO main classes}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`uuid` & Unique identifier for citation relation \\
+\verb`patent_id` & Patent making a citation \\
+\verb`text` & Description of citation \\
+\verb`sequence` & Order in which the focal patent cited the document \\
+\hline
+\end{tabular}
+\caption{OtherReference -- citations made to non-patent documents}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`type` & Category of patent, e.g. ``design'', ``reissue'' \\
+\verb`number` & Unique patent document number \\
+\verb`country` & Country of origin of patent \\
+\verb`date` & Date of grant of patent \\
+\verb`abstract` & Text of patent abstract \\
+\verb`title` & Text of patent title \\
+\verb`kind` & USPTO code for type of patent \\
+\verb`num_claims` & number of claims made by patent \\
+\hline
+\end{tabular}
+\caption{Patent -- granted patent records}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`id` & USPTO code for subclass \\
+\verb`title` & Title of USPTO subclass \\
+\verb`text` & Description of USPTO subclass \\
+\hline
+\end{tabular}
+\caption{SubClass -- reference table for definitions of USPTO subclasses}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`uuid` & Unique identifier for citation relation \\
+\verb`patent_id` & Patent making a citation \\
+\verb`date` & Date of patent making the citation \\
+\verb`name` & Name of US appliation citation \\
+\verb`kind` & Kind of document being cited \\
+\verb`number` & Document identifier of cited document \\
+\verb`country` & Country of origin of cited document \\
+\verb`category` & Type of citation to cited document \\
+\verb`sequence` & Order in which the focal patent cited the document \\
+\hline
+\end{tabular}
+\caption{USApplicationCitation -- citations made to US patent applications}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`uuid` & Unique identifier for citation relation \\
+\verb`patent_id` & Patent making a citation \\
+\verb`date` & Date of patent making the citation \\
+\verb`name` & Name of US patent citation \\
+\verb`kind` & Kind of document being cited \\
+\verb`number` & Document identifier of cited document \\
+\verb`country` & Country of origin of cited document \\
+\verb`category` & Type of citation to cited document \\
+\verb`sequence` & Order in which the focal patent cited the document \\
+\hline
+\end{tabular}
+\caption{USPatentCitation -- citations made to US granted patents}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`uuid` & Unique identifier for this relation \\
+\verb`patent_id` & Patent with this classification \\
+\verb`mainclass_id` & USPTO main class \\
+\verb`subclass_id` & USPTO subclass \\
+\verb`sequence` & Order in which this classification was listed on the document \\
+\hline
+\end{tabular}
+\caption{USPC -- US patent classes}
+\end{table}
+
+\begin{table}[ht]
+\center
+\begin{tabular}{| l | l |}
+\hline
+Column Name & Column Description \\
+\hline
+\verb`uuid` & Unique identifier for this relation \\
+\verb`patent_id` & Focal patent \\
+\verb`doctype` & Type of related document \\
+\verb`status` & Status of relation \\
+\verb`date` & Date of related document \\
+\verb`number` & Identifier of related document \\
+\verb`kind` & Kind of relation \\
+\verb`country` & Country of related document \\
+\verb`sequence` & Order in which this related document was listed on the document \\
+\hline
+\end{tabular}
+\caption{USRelDoc -- US Related Documents}
+\end{table}
