@@ -28,7 +28,8 @@ develop multiple branches of database integration.
 
 \begin{figure*}
 \begin{lstlisting}
-   number = ``%s''' % patent_number
+query = `select * from Patent where \
+    number = ``%s''' % patent_number
 result = connection.execute(query)
 patent_id = result[3]
 query = 'select * from assignee \
@@ -37,11 +38,10 @@ connection.execute(query)
 \end{lstlisting}
  \label{fig:sql-assignee} \caption{Finding assignees for a patent using traditional Python-SQL}
 \end{figure*}
-
-
 \begin{figure*}
 \begin{lstlisting}
-   filter_by(number = patent_number)
+patent = session.query(Patent).
+    filter_by(number = patent_number)
 patent.assignees
 \end{lstlisting}
  \label{fig:sa-assignee} \caption{Finding assignees for a patent using SQLAlchemy}
@@ -62,7 +62,8 @@ easier to work with than the traditional, kludgy idioms. In the case
 of SQLite, the normal Python module requires the user to excute strings
 of SQL code: 
 \begin{lstlisting}
-   number = ``%s''' % patent_number
+query = `select * from Patent where \
+    number = ``%s''' % patent_number
 connection.execute(query)
 \end{lstlisting}
 
@@ -82,7 +83,8 @@ SQLAlchemy obviates the need to implement such verbose security methods.
 The SQLAlchemy equivalent to the above query is:
 
 \begin{lstlisting}
-   filter_by(number = patent_number)
+session.query(Patent).
+    filter_by(number = patent_number)
 \end{lstlisting}
 
 
