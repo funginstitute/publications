@@ -1,0 +1,2 @@
+session.query(Patent).
+   filter_by(number = patent_number)

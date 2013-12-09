@@ -1,0 +1,66 @@
+The database$^{[1]}$ is divided into many tables. Out of these tables, the tables we can currently get information from (and their columns) are:
+
+\begin{enumerate}
+
+\item \verb`patent`: This table contains primary information about the patent. 
+\begin{enumerate} 
+\item title: The Title of the Patent
+\item id: The patent ID. This is a unique number for each patent.
+\item date: The date on which this patent was issued. 
+\item country: The country where this patent was issued.
+\end{enumerate}
+
+\item \verb`rawinventor`: This table contains information about the patent’s inventor.
+\begin{enumerate}
+\item name\_first: The first name of the inventor.
+\item name\_last: The last name of the inventor.
+\item nationality: The nationality of the inventor.
+\item location\_id: Column to establish a relationship between inventors and locations. This contains the id of the location of the inventor.
+\item patent\_id: Column to establish a relationship between a patent and its inventor. This contains the id of the patent to which it refers to.
+\end{enumerate}
+
+\item \verb`rawassignee`: This table contains information about the entity that assigned this patent.
+\begin{enumerate}
+\item name\_first: The first name of the assignee.
+\item name\_last: The last name of the assignee.
+\item nationality: The nationality of the assignee.
+organization: Name of the organization this assignee belongs to (if any).
+\item location\_id: Column to establish a relationship between inventors and locations. This contains the id of the location of the assignee.
+\item patent\_id: Column to establish a relationship between a patent and its assignee. This contains the id of the patent to which it refers to.
+\end{enumerate}
+
+\item \verb`rawlawyer`: 
+\begin{enumerate}
+\item name\_first: The first name of the inventor.
+\item name\_last: The last name of the inventor.
+\item organization: Name of the organization this assignee belongs to (if any).
+\item country: Country where the lawyer (organization) exists.
+\item patent\_id: Column to establish a relationship between a patent and its lawyer. This contains the id of the patent to which it refers to.
+\end{enumerate}
+
+\item \verb`rawlocation`: This table stores information for different locations.
+\begin{enumerate}
+\item id: Unique number for each location.
+\item city: The name of the city.
+\item state: The name of the state.
+\item country: The name of the country.
+\end{enumerate}
+
+\item \verb`claim`: This table stores information about the claims of every patent.
+\begin{enumerate}
+\item patent\_id: Column to establish a relationship between a patent and its lawyer. This contains the id of the patent to which the claim refers to.
+\item text: The text of this claim.
+\item dependent: ID of the claim this claim is dependent on.
+\item sequence: ID of this claim.
+\end{enumerate}
+
+\item \verb`uspatentcitation`: This table stores information on all the citations in a patent.
+\begin{enumerate}
+\item patent\_id: Column to establish a relationship between a patent and its lawyer. This contains the id of the patent to which it refers to.
+\item date: The date this citation was made.
+\item country: The country in which this citation was made.
+\item sequence: The ID of the citation.
+\end{enumerate}
+
+
+\end{enumerate}

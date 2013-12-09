@@ -1,0 +1,41 @@
+\documentclass[11pt, twocolumn]{article}
+\usepackage{fullpage}
+\usepackage{morefloats}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{pdftexcmds}
+\usepackage{listings}
+\begin{document}
+
+\title{Patent Database Search Tool}
+\author{Aditya Kaulagi, Gabe Fierro\\
+	Coleman Fung Institute for Engineering Leadership\\
+	UC Berkeley\\
+	\texttt{aditya15@berkeley.edu, fierro@eecs.berkeley.edu}}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+In this document, I describe the process of constructing SQL Queries from a HTML form, which are used to get results from a database. These results are then emailed to the person who requested them.
+\end{abstract}
+
+\section{Introduction}
+\input{introduction}
+\section{Structure of the Application}
+\input{structure}
+\section{Structure of Database}
+\input{structure_database}
+\section{Converting HTML form to SQL Query}
+\input{parsing}
+\section{Example Usage}
+\input{examples}
+\section{Acknowledgements}
+\input{acknowledgements}
+
+{
+\scriptsize
+\bibliographystyle{acm}
+\bibliography{patentprocessor}
+}
+
+\end{document}

@@ -1,0 +1,22 @@
+All of the conversion from HTML form to a SQL query is done in \verb`batchsql/models.py`. All of the form variables are given to the TestQuery class through the post variable that we get from django. In post, all the values entered by the user are stored as a dictionary in the form {“field-name”:”value”}. All form elements are broadly categorized into three types: 
+
+\begin{enumerate}
+\item Field Variables: These are the columns that the user wants information from. For example, Name of a Patent, or Name of the Inventor of the Patent.
+\item Filter Variables: These are the filters specified by the user. They are mostly textboxes or select lists. If a user enters ‘TX’ under the Inventor’s location filter, then all the rows (in the columns specified by field variables) that have the inventor’s location as ‘TX’ will be returned.
+\item Miscellaneous: The csrf token, the email address, the file type that the user wants the information in are considered as miscellaneous fields as models.py does not use these fields to make queries.
+\end{enumerate}
+
+	In models.py, we have a dictionary which maps the form elements’ names to (table,column) which they represent. For example, the Patent Title represents the patent table and the title column, and hence one of the entries in this dictionary will be \verb`‘pri-title’:(‘patent’, ‘title’)`(where ‘pri-title’ is the name of the field for Patent Title). All fields have a prefix of ‘f’ to separate them from filters. Converting the form elements is a 4 step process:
+
+\begin{enumerate}
+\item Get columns that the users want in their results and store it in a set. This is generated from the Field Variables.
+\item Get the names of tables to be searched and store it in a set. This is generated from both the Field Variables and Filter Variables.
+\item Get the filter conditions and store it in a set. This is generated from both the Field Variables (for cross-referencing between tables) and Filter Variables.
+\item Loop through the above sets and construct a query of the structure\\
+\end{enumerate}
+
+\begin{center}
+SELECT \{table.columns\} FROM \{tables\} WHERE \{filters\};
+\end{center}
+
+	Once this query is generated, it is stored in a local databse that stores the queued and completed job information, and then the \verb`run_jobs.py` file gets this query from this database and runs the jobs that have not yet been completed. It uses sqlalchemy$^{[2]}$ to connect  to and execute queries at the remote MySQL$^{[3]}$ database.
