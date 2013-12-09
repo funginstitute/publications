@@ -32,10 +32,11 @@ In this document, I describe the process of constructing SQL Queries from a HTML
 \section{Acknowledgements}
 \input{acknowledgements}
 
+\newpage
 {
 \scriptsize
 \bibliographystyle{acm}
-\bibliography{patentprocessor}
+\bibliography{newinterface}
 }
 
 \end{document}

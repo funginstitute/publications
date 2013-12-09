@@ -19,4 +19,4 @@ All of the conversion from HTML form to a SQL query is done in \verb`batchsql/mo
 SELECT \{table.columns\} FROM \{tables\} WHERE \{filters\};
 \end{center}
 
-	Once this query is generated, it is stored in a local databse that stores the queued and completed job information, and then the \verb`run_jobs.py` file gets this query from this database and runs the jobs that have not yet been completed. It uses sqlalchemy$^{[2]}$ to connect  to and execute queries at the remote MySQL$^{[3]}$ database.
+	Once this query is generated, it is stored in a local databse that stores the queued and completed job information, and then the \verb`run_jobs.py` file gets this query from this database and runs the jobs that have not yet been completed. It uses sqlalchemy~\cite{sqlalchemy} to connect  to and execute queries at the remote MySQL~\cite{mysql} database.
