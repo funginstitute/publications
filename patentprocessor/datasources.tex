@@ -1,33 +1,92 @@
-The unified patent dataset is composed of processed data from two separate sources: the Harvard Dataverse Network (DVN)~\cite{disambiguation} collection of patent data from 1975 through 2010 and the weekly distributions of Google-hosted USPTO records~\cite{googlefiles}.
+The unified patent dataset is composed of processed data from two
+separate sources: the Harvard Dataverse Network (DVN)~\cite{disambiguation}
+collection of patent data from 1975 through 2010 and the weekly distributions
+of Google-hosted USPTO records~\cite{googlefiles}\cite{googlefiles-applications}.
+
 
 \subsection{Harvard DVN}
 
-The Harvard DVN patent database consists of data drawn from the National Bureau of Economic Research (NBER), weekly distributions of patent data from the USPTO, and to a small extent, the 1998 Micropatent CD product~\cite{micropatent}. The schema of the database can be found in the Appendix.
+The Harvard DVN patent database consists of data drawn from the National
+Bureau of Economic Research (NBER), weekly distributions of patent
+data from the USPTO, and to a small extent, the 1998 Micropatent CD
+product~\cite{micropatent}. The schema of the database can be found
+in the Appendix.
 
-While the Harvard DVN patent database was, prior to the UC Berkeley patent database, the most extensively complete amalgamation of United States patent data, it is not without its problems. Firstly, there is little information as to the actual meanings of the columns in the databases. Without sufficient prior knowledge of patent structure, it is difficult to glean the semantic significance of each column. The names alone are often abbreviated and hard to discern. Secondly, because the DVN database is a combination of several sources into a single database schema, certain patent entries from NBER and Micropatent are incomplete where their data source did not provide all the requisite data. The data obtained from  the weekly distributions suffers from being made available in several different formats. The parser that was developed to handle the data is overly complicated and does not handle edge cases well, resulting in missing patent metadata where the parser did not account for a subtle change in format~\cite{oldparser}. This is analyzed in greater detail below.
+While the Harvard DVN patent database was, prior to the UC Berkeley
+patent database, the most extensively complete amalgamation of United
+States patent data, it is not without its problems. Firstly, there
+is little information as to the actual meanings of the columns in
+the databases. Without sufficient prior knowledge of patent structure,
+it is difficult to glean the semantic significance of each column.
+The names alone are often abbreviated and hard to discern. Secondly,
+because the DVN database is a combination of several sources into
+a single database schema, certain patent entries from NBER and Micropatent
+are incomplete where their data source did not provide all the requisite
+data. The data obtained from the weekly distributions suffers from
+being made available in several different formats. The parser that
+was developed to handle the data is overly complicated and does not
+handle edge cases well, resulting in missing patent metadata where
+the parser did not account for a subtle change in format~\cite{oldparser}.
+This is analyzed in greater detail below.
+
 
 \subsection{USPTO Weekly Distributions}
 
 \begin{table*}[t]
-\center
-\begin{tabular}{| l | l |}
-\hline
-Time Span & Data Format \\
-\hline
--1974 & paper-based \\
-1975 & unknown. Data obtained from Micropatent \\
-1976 - 2001 & Green Book (CITE) APS key-value \\
-2001 & SGML ST. 32 v2.4 \\
-2002 - 2004 & Red Book (CITE) XML ST. 32 v2.5 \\
-2005 & Red Book XML ST. 36 (ICE) v4.0 \\
-2006 & Red Book XML ST. 36 (ICE) v4.1 \\ 
-2007 - 2012 & Red Book XML ST. 36 (ICE) v4.2 \\
-2013 & Red Book XML ST. 36 (ICE) v4.3 \\
-2013 - & Red Book XML v4.4 \\
-\hline
-\end{tabular}
-\caption{Table of USPTO grant data formats}
-\label{fig:grantformats}
+\center %
+\begin{tabular}{|l|l|}
+\hline 
+Time Span  & Data Format \tabularnewline
+\hline 
+-1974  & paper-based \tabularnewline
+1975  & unknown. Data obtained from Micropatent \tabularnewline
+1976 - 2001  & Green Book (CITE) APS key-value \tabularnewline
+2001  & SGML ST. 32 v2.4 \tabularnewline
+2002 - 2004  & Red Book (CITE) XML ST. 32 v2.5 \tabularnewline
+2005  & Red Book XML ST. 36 (ICE) v4.0 \tabularnewline
+2006  & Red Book XML ST. 36 (ICE) v4.1 \tabularnewline
+2007 - 2012  & Red Book XML ST. 36 (ICE) v4.2 \tabularnewline
+2013  & Red Book XML ST. 36 (ICE) v4.3 \tabularnewline
+2013 -  & Red Book XML v4.4 \tabularnewline
+\hline 
+\end{tabular}\caption{Table of USPTO grant data formats}
+
+
+\label{fig:grantformats} 
+\end{table*}
+\begin{table*}[t]
+\center %
+\begin{tabular}{|l|l|}
+\hline 
+Time Span  & Data Format \tabularnewline
+\hline 
+-2001 & paper-based \tabularnewline
+2001  & XML ST. 32 v1.5\tabularnewline
+2002 - 2004  & Red Book (CITE) XML ST. 32 v1.6 \tabularnewline
+2005 & Red Book XML ST. 36 (ICE) v4.0\tabularnewline
+2006 & Red Book XML ST. 36 (ICE) v4.1 \tabularnewline
+2007 - 2012 & Red Book XML ST. 36 (ICE) v4.2 \tabularnewline
+2013 -  & Red Book XML ST. 36 (ICE) v4.3\tabularnewline
+\hline 
+\end{tabular}\caption{Table of USPTO grant data formats}
+
+
+\label{fig:applicationformats} 
 \end{table*}
 
-The USPTO distributions take the form of zip archives containing concatenated XML (Extensible Markup Language) documents, each of which contains the full text of each patent grant and patent application issued every week. Prior to 1975, the USPTO used a purely paper-based system before transitioning to a raw-text key-value and later SGML-based key-value store \footnote{Standard Generalized Markup Language}. Patent documents were made available in the XML format starting in 2001. Although this data is made freely available, the fact that digital USPTO patent data spans eight different formats and occupies more than 70 GB (compressed) over the 37 years of its existence makes rendering the data into an amenable form a nontrivial problem (see Table~\ref{fig:grantformats}). Patent application data, though only available in a digital format back to 2001, is nonetheless available in six different formats~\cite{xmlresources}~\cite{xmlretrospective}.
+
+The USPTO distributions take the form of zip archives containing concatenated
+XML (Extensible Markup Language) documents, each of which contains
+the full text of each patent grant and patent application issued every
+week. Prior to 1975, the USPTO used a purely paper-based system before
+transitioning to a raw-text key-value and later SGML-based key-value
+store %
+\footnote{Standard Generalized Markup Language%
+}. Patent documents were made available in the XML format starting
+in 2001. Although this data is made freely available, the fact that
+digital USPTO patent data spans eight different formats and occupies
+more than 70 GB (compressed) over the 37 years of its existence makes
+rendering the data into an amenable form a nontrivial problem (see
+Table~\ref{fig:grantformats} and Table~\ref{fig:applicationformats}).
+Patent application data, though only available in a digital format
+back to 2001, is nonetheless available in six different formats~\cite{xmlresources}~\cite{xmlretrospective}.

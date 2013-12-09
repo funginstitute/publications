@@ -1,43 +1,82 @@
-\documentclass[11pt, twocolumn]{article}
-\usepackage{fullpage}
-\usepackage{morefloats}
-\usepackage{url}
-\usepackage{graphicx}
-\usepackage{pdftexcmds}
+%% LyX 2.0.6 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[11pt,twocolumn]{article}
+\usepackage[latin9]{inputenc}
 \usepackage{listings}
+\usepackage{graphicx}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+
+\usepackage{fullpage}\usepackage{morefloats}\usepackage{url}\usepackage{pdftexcmds}\usepackage{listings}
+\let\textquotedbl="
+
+\makeatother
+
 \begin{document}
 
 \title{Processing USPTO Patent Data}
-\author{Gabe Fierro\\
-	Coleman Fung Institute for Engineering Leadership\\
-	UC Berkeley\\
-	\texttt{fierro@eecs.berkeley.edu}}
-\date{\today}
-\maketitle
 
+
+\author{Gabe Fierro\\
+ Coleman Fung Institute for Engineering Leadership\\
+ UC Berkeley\\
+ \texttt{fierro@eecs.berkeley.edu}}
+
+
+\date{\today}
+
+\maketitle
+ 
 \begin{abstract}
-We describe a completely automated data process designed to consume weekly releases of patent grants and applications distributed by the United States Patent and Trademark Office (USPTO). The process downloads and unpacks the zipped distribution files, parses the raw data into a SQL database, and performs various disambiguations and statistical calculations on the database.
+We describe a completely automated data process designed to consume
+weekly releases of patent grants and applications distributed by the
+United States Patent and Trademark Office (USPTO). The process downloads
+and unpacks the zipped distribution files, parses the raw data into
+a SQL database, and performs various disambiguations and statistical
+calculations on the database. 
 \end{abstract}
 
 \section{Introduction}
-\input{introduction}
+
+\input{introduction.tex} 
+
+
 \section{Processing Workflow}
-\input{workflow}
+
+\input{workflow.tex} 
+
+
 \section{Data Sources}
-\input{datasources}
+
+\input{datasources.tex} 
+
+
 \section{Parsing}
-\input{parsing}
+
+\input{parsing.tex} 
+
+
 \section{Database}
-\input{database}
+
+\input{database.tex} 
+
+
 \section{Disambiguations}
-\input{disambiguations}
+
+\input{disambiguations.tex} 
+
+
 \section{Statistics}
-\input{statistics}
 
-{
-\scriptsize
-\bibliographystyle{acm}
+\input{statistics.tex}
+
+{ {\scriptsize{ \bibliographystyle{acm}
 \bibliography{patentprocessor}
-}
-
+ }}}
 \end{document}
