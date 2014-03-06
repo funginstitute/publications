@@ -4,6 +4,8 @@
 \usepackage[latin9]{inputenc}
 \usepackage{url}
 \usepackage{graphicx}
+\usepackage{minted}
+\newminted{shell-session}{mathescape, linenos, numbersep=5pt, frame=lines, framesep=2mm}
 
 \makeatletter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
@@ -184,18 +186,38 @@ capable of running BASH, which is Mac OS X and most Linux environments.
 To setup a local environment to run the preprocessor, it is best practice
 to setup \verb`virtualenv` to handle local Python packages.
 
-\begin{verbatim}
-git clone  https://github.com/funginstitute/patentprocessor/
-cd patentprocessor pip install virtualenv 
-virtualenv venv
-. venv/bin/activate
-pip install -r requirements.txt
-\end{verbatim}
+\begin{shell-sessioncode}
+$ git clone  https://github.com/funginstitute/patentprocessor/
+$ cd patentprocessor pip install virtualenv 
+$ virtualenv venv
+$ . venv/bin/activate
+$ pip install -r requirements.txt
+$ wget https://s3.amazonaws.com/fungpatdownloads/geolocation_data.7z
+$ mv geolocation_data.7z lib/
+$ 7zr x geolocation_data.7z
+\end{shell-sessioncode}
 
 Configure the database connection in \verb`lib/alchemy/config.ini`,
 then configure the data process in \verb`process.cfg`. The patent
 processor can then be started by running \verb`python start.py process.cfg`.
 
+\section{Running Time}
+
+Current times are for processing granted data only. Times obtained on a 16-core, 2.0 Ghz machine running Fedora 19 with 256 GB of RAM. MySQL server is running on an 8-core, 3.0Ghz machine running Ubuntu 12.04 with 24 GB of RAM.
+
+\begin{center}
+\begin{tabular}{| l | c |}
+\hline
+Task & Time \\ \hline \hline
+Parsing 1 week of data & 2 hours \\ \hline
+Location Disambiguation & 20 hours \\ \hline
+Assignee Disambiguation & 26 hours \\ \hline
+Consolidation for Inventor Disambiguation & 24 hours \\ \hline
+Inventor Disambiguation & 90 hours \\ \hline
+Inventor Ingestion & 8 hours \\ \hline \hline
+Total & 170 hours \\ \hline
+\end{tabular}
+\end{center}
 
 \section{Resources}
 
