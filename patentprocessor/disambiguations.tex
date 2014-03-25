@@ -71,7 +71,7 @@ the same, and are linked together.
 It is not tractable to perform pairwise computation on each of the
 5,850,531 raw assignee records in the database (at time of writing),
 so we group the assignees by their first letter, and then perform
-the pairwise comparisions within each of these blocks. This allows
+the pairwise comparisons within each of these blocks. This allows
 us to hold a smaller chunk of the assignees in memory at each step,
 with approximate accuracy.
 
@@ -90,11 +90,11 @@ central assignees. If their clean identifier is within the Jaro-Winkler
 threshold of some central assignee, then the candidate is placed in that pool;
 else, it is placed into a new pool of which it is the only member. This
 continues until all assignees are placed into a pool. A record is chosen from
-the pool to act as the dismbiguated record for that pool, and all rawassignees
+the pool to act as the disambiguated record for that pool, and all rawassignees
 are linked to that disambiguated record.
 
 There is obvious room for improvement in this algorithm -- including more
-global string comparisons and the leveraging of additioanl metadata to
+global string comparisons and the leveraging of additional metadata to
 further group and lump assignees -- but due to current computational
 constraints, it is not possible to implement these changes within the current
 framework. This disambiguation delivers a decent fix for the various misspellings
@@ -119,4 +119,17 @@ able to infer with more than 95\% accuracy which inventor records
 are the same across all records in the patent database.
 
 A detailed summary of our technique can be found through a related
-Fung Institute publication~\cite{newdisambiguation}. 
+Fung Institute publication~\cite{newdisambiguation}.
+
+\subsection{Creation of Disambiguated Records}
+
+When raw records are condensed into a single disambiguated record, some process must
+be followed for determining what that disambiguated record is. This process differs across
+the disambiguation processes. 
+
+The inventor disambiguation takes the most common first/last name pair for a block of
+\verb`rawinventor`s and assigns that to be the disambiguated name. The assignee and
+lawyer disambiguations iterate through each pool of grouped records -- starting with
+the central record -- and take the first non-null organization or first/last name pair for
+the disambiguated record. The location disambiguation uses the groundtruth obtained
+from the Google disambiguation to form its records.
