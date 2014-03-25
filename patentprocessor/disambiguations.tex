@@ -64,7 +64,7 @@ trying to get accurate results.
 We do not yet provide fully featured entity resolution for assignee
 records, but we do maintain a preliminary disambiguation of the records
 that corrects for minor misspellings. We do this by applying the Jaro-Winkler~\cite{jw}
-string similarity algorithm to each pair of raw assignee records.
+string similarity algorithm to certain pairs of raw assignee records.
 Two records that are within a certain bound of similarity are considered
 the same, and are linked together.
 
@@ -73,8 +73,32 @@ It is not tractable to perform pairwise computation on each of the
 so we group the assignees by their first letter, and then perform
 the pairwise comparisions within each of these blocks. This allows
 us to hold a smaller chunk of the assignees in memory at each step,
-and achieves near the same accuracy.
+with approximate accuracy.
 
+First, all assignees are associated with a ``clean identifier'', which consists
+of the organization name (or concatenated first and last names) of the
+assignee, lower cased, with all non-letter and non-whitespace characters
+removed. This simplifies the comparison process. Following this normalization,
+all assignees are placed into a block according to the first letter of their clean
+identifier.
+
+Disambiguation occurs within blocks, resulting in a set of ``pools'' indexed by
+a central assignee and containing assignees that are within some Jaro-Winkler
+threshold of that central assignee. As assignees are popped off the end of the
+list of non-disambiguated assignees, they are compared against each of the
+central assignees. If their clean identifier is within the Jaro-Winkler
+threshold of some central assignee, then the candidate is placed in that pool;
+else, it is placed into a new pool of which it is the only member. This
+continues until all assignees are placed into a pool. A record is chosen from
+the pool to act as the dismbiguated record for that pool, and all rawassignees
+are linked to that disambiguated record.
+
+There is obvious room for improvement in this algorithm -- including more
+global string comparisons and the leveraging of additioanl metadata to
+further group and lump assignees -- but due to current computational
+constraints, it is not possible to implement these changes within the current
+framework. This disambiguation delivers a decent fix for the various misspellings
+occurred in the database.
 
 \subsection{Lawyers}
 
@@ -83,6 +107,8 @@ as the assignee records. Again, we only offer a preliminary disambiguation
 of lawyer records using the same algorithm as described above, but
 future development will yield more accurate results.
 
+The assignee disambiguation has yet to be implemented for the lawyer
+record tables.
 
 \subsection{Inventors}
 
