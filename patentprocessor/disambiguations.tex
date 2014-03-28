@@ -20,11 +20,14 @@ the ambiguities in the location data using a propietary disambiguation
 technique developed by Google. When new patent data is processed,
 we run a series of data cleaning processes to correct for some of
 the common errors, then cross reference with the lookup table~\cite{geotable}
-obtained through the Google disambiguation.
+obtained through the Google disambiguation. 
 
 A detailed analysis of the problems with USPTO location data and our
 handling of locations can be found through a related Fung Institute
-publication~\cite{geocoding}.
+publication~\cite{geocoding}. The process primarily uses a lookup table
+to find disambiguated locations for the raw inputs. However, some locations are
+too ambiguous to be matched to a real-world latitude and longitude, so not all
+rawlocations have a matching location. 
 
 Locations are associated with assignees, inventors and lawyers. Typically,
 a patent record's ``location'' is the location of the first inventor
