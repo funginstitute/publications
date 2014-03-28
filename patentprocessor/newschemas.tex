@@ -50,7 +50,7 @@ Column Name & Column Description \\
 \verb`sequence` & Order in which this assignee was listed on the patent \\
 \hline
 \end{tabular}
-\caption{RawAssignee -- raw records for the original patent assignee}
+\caption{RawAssignee -- raw records for the original patent assignee. Fields exist as they are listed on the original XML document.}
 \end{table}
 
 
@@ -58,11 +58,10 @@ Column Name & Column Description \\
 \center
 \begin{tabular}{| l | l |}
 \hline
-Column Name & Column Description \\
+Column Name & Column Description \\ \hline
 \verb`patent_id` & Patent being cited \\
 \verb`citation_id` & Document citing the focal patent \\
 \verb`year` & Year the citation was made \\
-\hline
 \hline
 \end{tabular}
 \caption{CitedBy -- precompiled table of future citations}
@@ -244,7 +243,7 @@ Column Name & Column Description \\
 \verb`text` & Description of USPTO main class \\
 \hline
 \end{tabular}
-\caption{MainClass -- reference table for definitions of USPTO main classes}
+\caption{MainClass -- reference table for definitions of USPTO main classes.}
 \end{table}
 
 \begin{table}[ht]
@@ -348,7 +347,7 @@ Column Name & Column Description \\
 \verb`sequence` & Order in which this classification was listed on the document \\
 \hline
 \end{tabular}
-\caption{USPC -- US patent classes}
+\caption{USPC -- US patent classes. Classes listed are classes \emph{at issue}. The database does not contain updated classifications.}
 \end{table}
 
 \begin{table}[ht]
