@@ -92,8 +92,6 @@ by means of a configuration file. Here is a sample configuration file:
 parse=test
 clean=True
 consolidate=True
-outputdir=.
-lowmemory=False
 doctype=all
 
 [test]
@@ -112,11 +110,7 @@ line are configuration options. \verb`parse` indicates which of the
 parsing configurations will be run (see below). \verb`clean`, if
 \verb`True`, runs the cleaning step on the output of the previously
 run parse. Similarly, \verb`consolidate`, if \verb`True`, runs the
-consolidation step on the output of the cleaning step. The \verb`lowmemory`
-option, if \verb`True`, will run the cleaning and consolidation steps
-in such a way that they require less memory, but are slower and sometimes
-less accurate. It is recommended to leave this as \verb`True` unless
-the host computer has more than 64 GB of RAM.
+consolidation step on the output of the cleaning step.
 
 The \verb`parse` section takes as input the title of another configuration
 section, which defines the options for which patent files are to be
@@ -188,18 +182,33 @@ to setup \verb`virtualenv` to handle local Python packages.
 
 \begin{shell-sessioncode}
 $ git clone  https://github.com/funginstitute/patentprocessor/
-$ cd patentprocessor pip install virtualenv 
-$ virtualenv venv
-$ . venv/bin/activate
+$ cd patentprocessor
 $ pip install -r requirements.txt
 $ wget https://s3.amazonaws.com/fungpatdownloads/geolocation_data.7z
 $ mv geolocation_data.7z lib/
 $ 7zr x geolocation_data.7z
 \end{shell-sessioncode}
 
+Alternatively, use the included \verb`Vagrantfile`, built using the ever-helpful Vagrant virtual machine configuration tool: \url{http://www.vagrantup.com/}.
+The Vagrantfile is located in \verb`patentprocessor/vm` and the full development environment can be started simply by running \verb`vagrant up` from the
+command line, assuming Vagrant and a VM provider such as Virtualbox (\url{https://www.virtualbox.org/}) are installed. The provisioning for the virtual machine will
+automatically configure for running the data process through the consolidation for the disambiguator, so use this as a model for configuring your own environment.
+
 Configure the database connection in \verb`lib/alchemy/config.ini`,
 then configure the data process in \verb`process.cfg`. The patent
 processor can then be started by running \verb`python start.py process.cfg`.
+
+\subsection{Running Manually}
+
+Instead of running the toolchain through the automated and configurable interface, we can each of the segments discretely. 
+
+\begin{shell-sessioncode}
+$ python parse.py -p path/to/data/files
+$ ./run_clean.sh
+$ ./run_consolidation.sh <optional path to previous inventor disambiguation output>
+$ # here we would deliver the 'disambiguator_<Month>_<Day>.tsv' file to the disambiguator
+$ python integrate.py <input to disambiguator> <output of disambiguator>
+\end{shell-sessioncode}
 
 \section{Running Time}
 
